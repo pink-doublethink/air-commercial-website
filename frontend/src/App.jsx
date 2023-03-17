@@ -1,32 +1,58 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import "./App.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+
+import Home from "./components/Home";
+import NavBar from "./components/NavBar";
+import NotFound from "./components/NotFound";
+import Cart from "./components/Cart";
+
+import "react-toastify/dist/ReactToastify.css";
+import Register from "./components/auth/Register";
+import Login from "./components/auth/Login";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { loadUser } from "./slices/authSlice";
+import CheckoutSuccess from "./components/CheckoutSuccess";
+import Dashboard from "./components/admin/Dashboard";
+import Products from "./components/admin/Products";
+import Users from "./components/admin/Users";
+import Orders from "./components/admin/Oders";
+import Summary from "./components/admin/Summary";
+import CreateProduct from "./components/admin/CreateProduct";
+
 
 function App() {
-  const [count, setCount] = useState(0)
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(loadUser(null));
+  }, [dispatch]);
 
   return (
     <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <BrowserRouter>
+        <ToastContainer />
+        <NavBar />
+        <div className="content-container">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/checkout-success" element={<CheckoutSuccess />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/admin" element={<Dashboard />}>
+              <Route path="summary" element={<Summary />} />
+              <Route path="products" element={<Products />}>
+                <Route path="create-product" element={<CreateProduct />} />
+              </Route>
+              <Route path="users" element={<Users />} />
+              <Route path="orders" element={<Orders />} />
+            </Route>
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </div>
+      </BrowserRouter>
     </div>
   )
 }
