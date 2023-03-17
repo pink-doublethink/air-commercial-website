@@ -8,26 +8,9 @@ import NotFound from "./components/NotFound";
 import Cart from "./components/Cart";
 
 import "react-toastify/dist/ReactToastify.css";
-import Register from "./components/auth/Register";
-import Login from "./components/auth/Login";
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { loadUser } from "./slices/authSlice";
-import CheckoutSuccess from "./components/CheckoutSuccess";
-import Dashboard from "./components/admin/Dashboard";
-import Products from "./components/admin/Products";
-import Users from "./components/admin/Users";
-import Orders from "./components/admin/Oders";
-import Summary from "./components/admin/Summary";
-import CreateProduct from "./components/admin/CreateProduct";
 
 
 function App() {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(loadUser(null));
-  }, [dispatch]);
 
   return (
     <div className="App">
